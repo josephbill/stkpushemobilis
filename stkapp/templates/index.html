@@ -1,0 +1,52 @@
+{% extends 'layout.html' %} {% block body %}
+
+    <div class="container">
+       <div class="row">
+           <div>
+               <h1>STK PUSH</h1>
+               <form action="/stk_push/" method="post" class="form">
+                   {% csrf_token %}
+                   <label for="phone">Phone Number:</label>
+                   <input
+                      class="form-control"
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      value="254"
+                      required /><br/>
+                     <label for="amount">Amount:</label>
+                   <input
+                      class="form-control"
+                      type="number"
+                      id="amount"
+                      name="amount"
+                      required /><br/>
+                     <label for="name">Name:</label>
+                   <input
+                      class="form-control"
+                      type="text"
+                      id="name"
+                      name="name"
+                      required /><br/>
+
+                     <label for="email">Email Address:</label>
+                   <input
+                      class="form-control"
+                      type="text"
+                      id="email"
+                      name="email"
+                      required /><br/>
+                   <button class="btn btn-success" type="submit">Pay Now</button>
+
+               </form>
+
+           </div>
+
+       </div>
+
+    </div>
+
+
+
+
+{% endblock %}
