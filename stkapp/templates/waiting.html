@@ -28,7 +28,7 @@
 
       let checkStatusInterval = setInterval(function () {
         console.log("Checking transaction status...");
-        fetch(`https://stkpushmpesa.onrender.com/check-status/${transactionId}/`)
+        fetch(`/${transactionId}/`)
           .then((response) => response.json())
           .then((data) => {
             if (data.status === "Success") {
