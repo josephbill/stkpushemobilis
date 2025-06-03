@@ -4,11 +4,11 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'), # front page
     #path to prompt stk push
-    path('', views.stk_push, name='stk_push'),
+    path('stk_push/', views.stk_push, name='stk_push'),
     # the routes for status checking
     path('waiting/<int:transaction_id>/', views.waiting_page, name="waiting_page"),
    # this is the route that will receive the status of our transaction
-    path('callback', views.callback, name="callback"),
+    path('callback/', views.callback, name="callback"),
     # this route confirms the status from above callback result
     path('check-status/<int:transaction_id>/', views.check_status, name="check-status"),
     # payments views (successful, failed or cancelled)

@@ -72,7 +72,7 @@ def stk_push(request):
             "PartyA": phone,
             "PartyB": SHORTCODE,
             "PhoneNumber": phone,
-            "CallbackURL": f"{NGROK_URL}/callback",
+            "CallBackURL": f"{NGROK_URL}/callback/",
             "AccountReference": f"Transaction_{transaction.id}",
             "TransactionDesc": "Payment Request",
         }
@@ -100,7 +100,7 @@ def stk_push(request):
 def waiting_page(request, transaction_id):
     transaction = Transaction.objects.get(id = transaction_id)
     return render(request, 'waiting.html',
-                  {'transanction_id': transaction_id})
+                  {'transaction_id': transaction_id})
 
 
 ### CALLBACK METHOD L: THIS METHOD WILL FETCH OUR RESULTS FOR A TRANSACTION
@@ -181,8 +181,29 @@ def callback(request):
                         status=400)
 ### Check status will enable us to track the status of a transaction
 def check_status(request, transaction_id):
-    pass
-
+    # get the transaction needed for status prompt
+    transaction = Transaction.objects.filter(id = transaction_id).first()
+    if not transaction:
+        return JsonResponse({"status": "failed", "message":
+            "Transaction not found!"}, status=400)
+    '''
+    - on stk push method -> transaction status is pending 
+    - on successful payment -> transaction status is successful 
+    - on failed payment -> transaction status is failed 
+    - on cancellation -> transaction status is cancelled 
+    '''
+    if transaction.status == "Success":
+        return JsonResponse({"status": "Success", "message":
+                             "Payment Successful"}, status=200)
+    elif transaction.status == "Failed":
+        return JsonResponse({"status": "Failed", "message":
+            "Payment Failed"}, status=200)
+    elif transaction.status == "Cancelled":
+        return JsonResponse({"status": "Cancelled", "message":
+                             "Transaction cancelled"}, status=200)
+    else:
+        return JsonResponse({"status": "Pending", "message":
+                             "Transaction pending"}, status=400)
 def payment_success(request):
     return render(request,'payment_success.html')
 
