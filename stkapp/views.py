@@ -83,7 +83,7 @@ def stk_push(request):
         print(response_data)
         #update the transaction with current status frm resp.
         transaction_id = response_data.get(
-            'CheckoutRequestId',None)
+            'CheckoutRequestID',None)
         transaction.transaction_id = transaction_id
         transaction.description = response_data.get(
             'ResponseDescription',"No Description"
@@ -114,12 +114,12 @@ def callback(request):
             stk_callback = data.get('Body',{}).get('stkCallback',{})
             result_code = stk_callback.get('ResultCode',None)
             result_desc = stk_callback.get('ResultDesc','')
-            transaction_id  = stk_callback.get('CheckoutRequestId',None)
+            transaction_id  = stk_callback.get('CheckoutRequestID',None)
             print("callback result")
             print(transaction_id,result_code)
             # we now check the transaction result . i.e. did user pay or not
             if transaction_id:
-                transaction = Transaction.objects.get(id = transaction_id)
+                transaction = Transaction.objects.filter(transaction_id = transaction_id).first()
                 print("current transaction in db", transaction)
                 if transaction:
                     if result_code == 0:
@@ -203,7 +203,7 @@ def check_status(request, transaction_id):
                              "Transaction cancelled"}, status=200)
     else:
         return JsonResponse({"status": "Pending", "message":
-                             "Transaction pending"}, status=400)
+                             "Transaction pending"}, status=200)
 def payment_success(request):
     return render(request,'payment_success.html')
 

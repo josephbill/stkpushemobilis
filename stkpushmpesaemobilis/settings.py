@@ -38,7 +38,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'a00d-197-237-118-180.ngrok-free.app'
+    '00d8-197-237-118-180.ngrok-free.app'
 ]
 
 
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "https://00d8-197-237-118-180.ngrok-free.app"
 ]
 
 MIDDLEWARE = [
